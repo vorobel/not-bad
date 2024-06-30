@@ -188,15 +188,15 @@ export const deleteUser = (req, res) => {
           )
         );
     } else {
-      res
-        .status(HttpStatus.NOT_FOUND.code)
-        .send(
-          new Response(
-            HttpStatus.NOT_FOUND.code,
-            HttpStatus.NOT_FOUND.status,
-            `User by id ${req.params.id} was not found`
-          )
-        );
+              res
+                .status(HttpStatus.NOT_FOUND.code)
+                .send(
+                  new Response(
+                    HttpStatus.NOT_FOUND.code,
+                    HttpStatus.NOT_FOUND.status,
+                    `User by id ${req.params.id} was not found`
+                  )
+                );
     }
   });
 };
