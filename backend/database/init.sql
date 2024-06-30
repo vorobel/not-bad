@@ -1,0 +1,17 @@
+CREATE DATABASE IF NOT EXIST pet_project_db;
+
+USE pet_project_db;
+
+DROP TABLE IF EXIST users;
+
+CREATE TABLE users (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    email VARCHAR(255) NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    image_url VARCHAR(255) DEFAULT NULL,
+    phone VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT UQ_Users_Email UNIQUE (email)
+);
