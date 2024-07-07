@@ -6,6 +6,7 @@ const QUERY = {
   UPDATE_USER:
     "UPDATE users SET email = ?, first_name = ?, last_name = ?, image_url = ?, phone = ? WHERE id = ?",
   DELETE_USER: "DELETE FROM users WHERE id = ?",
+  CREATE_USER_PROCEDURE: "CALL create_and_return(?, ?, ?, ?, ?)"
 };
 
 export default QUERY;

@@ -61,7 +61,8 @@ export const getUsers = (req, res) => {
 export const createUser = (req, res) => {
   logger.info(`${req.method} ${req.originalUrl}, creating user`);
   database.query(
-    QUERY.CREATE_USER,
+    // QUERY.CREATE_USER,
+    QUERY.CREATE_USER_PROCEDURE,
     Object.values(req.body),
     (error, results) => {
       if (!results) {
@@ -76,11 +77,12 @@ export const createUser = (req, res) => {
             )
           );
       } else {
-        const user = {
-          id: results.insertedId,
-          ...req.body,
-          created_at: new Date(),
-        };
+        // const user = {
+        //   id: results.insertedId,
+        //   ...req.body,
+        //   created_at: new Date(),
+        // };
+        const user = results[0][0];
         res
           .status(HttpStatus.CREATED.code)
           .send(
@@ -141,7 +143,15 @@ export const updateUser = (req, res) => {
       logger.info(`${req.method} ${req.originalUrl}, updating user`);
       database.query(
         QUERY.UPDATE_USER,
-        [Object.values(req.body), req.params.id],
+
+        [
+          req.body.email,
+          req.body.first_name,
+          req.body.last_name,
+          req.body.image_url,
+          req.body.phone,
+          req.params.id,
+        ],
         (error, results) => {
           if (!error) {
             res.status(HttpStatus.OK.code).send(
@@ -150,7 +160,7 @@ export const updateUser = (req, res) => {
                 HttpStatus.OK.status,
                 "User updated",
                 {
-                  id: req.parapms.id,
+                  id: req.params.id,
                   ...req.body,
                 }
               )
@@ -188,15 +198,15 @@ export const deleteUser = (req, res) => {
           )
         );
     } else {
-              res
-                .status(HttpStatus.NOT_FOUND.code)
-                .send(
-                  new Response(
-                    HttpStatus.NOT_FOUND.code,
-                    HttpStatus.NOT_FOUND.status,
-                    `User by id ${req.params.id} was not found`
-                  )
-                );
+      res
+        .status(HttpStatus.NOT_FOUND.code)
+        .send(
+          new Response(
+            HttpStatus.NOT_FOUND.code,
+            HttpStatus.NOT_FOUND.status,
+            `User by id ${req.params.id} was not found`
+          )
+        );
     }
   });
 };
